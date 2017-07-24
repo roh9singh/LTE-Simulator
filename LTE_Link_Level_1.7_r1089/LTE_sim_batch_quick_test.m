@@ -15,7 +15,7 @@ DEBUG_LEVEL = 5; % Now set to highest level.
 
 % Number of subframes to simulate
 N_subframes = 5000;
-simulation_type = 'parallel'; % 'parallel' or 'normal'
+simulation_type = 'normal'; % 'parallel' or 'normal'
 channel_type = 'PedB';
 
 % Example configuration for CQI 7

@@ -117,12 +117,14 @@ tmp_results = repmat(tmp_results,1,size(SNR_vec,2));
 clear UE_res cell_res;
 
 %% Parallel toolbox
-num = matlabpool('size');
-if strcmp(LTE_params.simulation_type,'parallel') && ~num
-    matlabpool('open');
+%num = parpool('size');
+poolobj = gcp('nocreate');
+if strcmp(LTE_params.simulation_type,'parallel') && isempty(poolobj)
+    parpool('local', 1);
     %     matlabpool 1
 end
-par_sched = findResource();
+%par_sched = findResource();
+par_sched = parcluster('local');
 
 %% SNR and frame loops
 StartTime = clock;
@@ -136,7 +138,7 @@ fid = fopen('counter.m','w');
 fprintf(fid,'%c','');
 fclose(fid);
 
-parfor SNR_i=1:size(SNR_vec,2)
+for SNR_i=1:size(SNR_vec,2)
     
     %% reset of the random generators
     if LTE_params.random_channel_param_seeding
