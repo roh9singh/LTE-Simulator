@@ -20,7 +20,8 @@ channel_type = 'PedB';
 
 % Example configuration for CQI 7
 cqis_to_simulate = 7;
-tx_modes_to_simulate = [111 221 242 342]; % XYZ--> TX mode, nTX antennas, nRX antennas
+%tx_modes_to_simulate = [111 221 242 342]; % XYZ--> TX mode, nTX antennas, nRX antennas
+tx_modes_to_simulate = 111;
 nr_re_tx_vect = [ 0 3 ];
 
 MIMO         = tx_modes_to_simulate >= 200;
