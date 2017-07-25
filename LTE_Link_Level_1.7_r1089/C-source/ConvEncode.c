@@ -47,7 +47,7 @@
 #include <mex.h>
 #include <matrix.h>
 #include <stdlib.h>
-
+#include <stdio.h>
 /* library of functions */
 #include "convolutional.h"
 
@@ -70,7 +70,7 @@ void mexFunction(
     unsigned char *input;
 	unsigned char	*output_p;
 	mwSize   DataLength, CodeLength, i, j, index;
-	int      subs[] = {1,1};
+	size_t      subs[] = {1,1};
 	int     *g_encoder;
 	int		 nn, KK, mm, code_type, max_states;
 	double   elm;
@@ -82,7 +82,7 @@ void mexFunction(
     /* Check if the input is of the correct type */
     if ( mxIsLogical(prhs[0]) != 1)
         mexErrMsgTxt("Input must be logical.");
-    
+
 	/* Check for proper number of arguments */
 	if ((nrhs < 2 )||(nlhs  > 1)) {
 		mexErrMsgTxt("Usage: [output] = ConvEncode(input, g_encoder, code_type )");
@@ -97,7 +97,7 @@ void mexFunction(
 			input_int[i] = (int) input[i];
 
 		/* second input specifies the code polynomial */
-	    g_array = mxGetPr(GENENCODER);	
+	    g_array = mxGetPr(GENENCODER);
 		nn = mxGetM(GENENCODER);
 		KK = mxGetN(GENENCODER);
 		mm = KK - 1;
@@ -124,7 +124,7 @@ void mexFunction(
 				index = mxCalcSingleSubscript(GENENCODER, 2, subs);
 				elm = g_array[index];
 				if (elm != 0) {
-					g_encoder[i] = g_encoder[i] + (int) pow(2,(KK-j-1)); 
+					g_encoder[i] = g_encoder[i] + (int) pow(2,(KK-j-1));
 				}
 			}
 			/* mexPrintf("   g_encoder[%d] = %o\n", i, g_encoder[i] ); */
@@ -158,12 +158,12 @@ void mexFunction(
 
 	/* Encode */
 	conv_encode( output_int, input_int, out0, state0, out1, state1, tail, KK, DataLength, nn );	
-
+ 
 	/* cast to output */
     for (i=0;i<CodeLength;i++) {
         output_p[i] = (unsigned char) output_int[i];
     }
-    
+
     /* To test how Matlab writes the output */
     /*
     output_p[0] = 1;
@@ -177,7 +177,7 @@ void mexFunction(
     output_p[8] = 9;
     output_p[9] = 10;
     */
-		
+
 	/* Clean up memory */
 	free( output_int );
 	free( input_int );
