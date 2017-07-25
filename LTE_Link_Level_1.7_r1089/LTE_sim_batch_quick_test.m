@@ -14,7 +14,7 @@ global DEBUG_LEVEL;
 DEBUG_LEVEL = 5; % Now set to highest level.
 
 % Number of subframes to simulate
-N_subframes = 5000;
+N_subframes = 250;
 simulation_type = 'normal'; % 'parallel' or 'normal'
 channel_type = 'PedB';
 
